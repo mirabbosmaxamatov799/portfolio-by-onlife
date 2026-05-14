@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio — Grafik Dizayn & Fotografiya</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@200;300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F8F6F2;
+            --bg2: #EFECEA;
+            --dark: #0E0E0C;
+            --dark2: #2C2C2A;
+            --accent: #C8A96E;
+            --muted: #9A9690;
+            --line: #E0DDD8;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--dark);
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        /* CURSOR */
+        .cursor {
+            width: 6px;
+            height: 6px;
+            background: var(--dark);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-ring {
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--dark);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.18s ease;
+            opacity: 0.5;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 48px;
+            background: rgba(248, 246, 242, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        nav.scrolled {
+            border-color: var(--line);
+        }
+
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--dark);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding-top: 80px;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 80px 48px;
+            border-right: 1px solid var(--line);
+        }
+
+        .hero-tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 5vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.05;
+            margin-bottom: 32px;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-desc {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.8;
+            max-width: 380px;
+            margin-bottom: 48px;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--dark);
+            text-decoration: none;
+            border-bottom: 1px solid var(--dark);
+            padding-bottom: 4px;
+            transition: gap 0.3s;
+        }
+
+        .hero-cta:hover {
+            gap: 20px;
+        }
+
+        .hero-right {
+            position: relative;
+            overflow: hidden;
+            background: var(--bg2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .hero-right img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+
+        .slot-icon {
+            font-size: 2.5rem;
+            opacity: 0.25;
+        }
+
+        .slot-text {
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            opacity: 0.6;
+        }
+
+        .hero-number {
+            position: absolute;
+            bottom: 32px;
+            right: 32px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 6rem;
+            font-weight: 300;
+            color: rgba(0, 0, 0, 0.04);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        /* STATS */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .stat {
+            padding: 40px 48px;
+            border-right: 1px solid var(--line);
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* SECTION HEADER */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 80px 48px 48px;
+        }
+
+        .section-tag {
+            font-size: 0.68rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 300;
+            line-height: 1.1;
+        }
+
+        .section-link {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 3px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .section-link:hover {
+            color: var(--dark);
+            border-color: var(--dark);
+        }
+
+        /* DESIGN GRID */
+        .design-grid {
+            padding: 0 48px 80px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px;
+        }
+
+        .work-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .work-card:hover {
+            border-color: var(--accent);
+        }
+
+        .work-card:nth-child(1) {
+            grid-column: 1 / 8;
+        }
+
+        .work-card:nth-child(2) {
+            grid-column: 8 / 13;
+        }
+
+        .work-card:nth-child(3) {
+            grid-column: 1 / 5;
+        }
+
+        .work-card:nth-child(4) {
+            grid-column: 5 / 9;
+        }
+
+        .work-card:nth-child(5) {
+            grid-column: 9 / 13;
+        }
+
+        .work-card:nth-child(6) {
+            grid-column: 1 / 13;
+        }
+
+        .work-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--bg2);
+        }
+
+        .work-card:nth-child(1) .work-empty {
+            aspect-ratio: 16/9;
+        }
+
+        .work-card:nth-child(2) .work-empty,
+        .work-card:nth-child(3) .work-empty,
+        .work-card:nth-child(4) .work-empty,
+        .work-card:nth-child(5) .work-empty {
+            aspect-ratio: 4/3;
+        }
+
+        .work-card:nth-child(6) .work-empty {
+            aspect-ratio: 21/6;
+        }
+
+        /* Rasm qo'shish uchun: img tag ni display:block qiling */
+        .work-img {
+            width: 100%;
+            object-fit: cover;
+            display: none;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .work-card:hover .work-img {
+            transform: scale(1.04);
+        }
+
+        .work-card:nth-child(1) .work-img {
+            aspect-ratio: 16/9;
+        }
+
+        .work-card:nth-child(6) .work-img {
+            aspect-ratio: 21/6;
+        }
+
+        .empty-icon {
+            font-size: 1.8rem;
+            opacity: 0.3;
+        }
+
+        .empty-text {
+            font-size: 0.64rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            opacity: 0.5;
+        }
+
+        .work-info {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--line);
+            background: var(--white);
+        }
+
+        .work-title-text {
+            font-size: 0.82rem;
+            font-weight: 400;
+        }
+
+        .work-cat {
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: var(--bg2);
+            padding: 3px 10px;
+            border-radius: 2px;
+        }
+
+        /* PHOTO SECTION */
+        .photo-section {
+            background: var(--dark);
+            padding: 80px 48px;
+        }
+
+        .photo-section .section-header {
+            padding: 0 0 48px;
+        }
+
+        .photo-section .section-title {
+            color: var(--bg);
+        }
+
+        .photo-section .section-tag {
+            color: var(--accent);
+        }
+
+        .photo-section .section-link {
+            color: var(--muted);
+            border-color: #333;
+        }
+
+        .photo-section .section-link:hover {
+            color: var(--bg);
+            border-color: var(--bg);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .photo-card {
+            position: relative;
+            overflow: hidden;
+            background: #1A1A18;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            transition: transform 0.6s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-empty {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .photo-empty-icon {
+            font-size: 1.6rem;
+            opacity: 0.2;
+        }
+
+        .photo-empty-text {
+            font-size: 0.62rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #555;
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 24px 20px 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .photo-card:hover .photo-overlay {
+            transform: translateY(0);
+        }
+
+        .photo-name {
+            font-size: 0.85rem;
+            color: #fff;
+        }
+
+        .photo-loc {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.55);
+            margin-top: 4px;
+        }
+
+        /* SERVICES */
+        .services {
+            padding: 80px 48px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 48px;
+            border: 1px solid var(--line);
+        }
+
+        .service-item {
+            padding: 40px 36px;
+            border-right: 1px solid var(--line);
+            transition: background 0.3s;
+        }
+
+        .service-item:last-child {
+            border-right: none;
+        }
+
+        .service-item:hover {
+            background: var(--bg2);
+        }
+
+        .service-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .service-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .service-desc {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* CONTACT */
+        .contact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 60vh;
+        }
+
+        .contact-left {
+            padding: 80px 48px;
+            border-right: 1px solid var(--line);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .contact-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            font-weight: 300;
+            line-height: 1.1;
+        }
+
+        .contact-title em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .contact-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .contact-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .contact-val {
+            font-size: 0.85rem;
+        }
+
+        .contact-right {
+            padding: 80px 48px;
+            background: var(--dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-right h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: var(--bg);
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 0.68rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #333;
+            padding: 10px 0;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            color: var(--bg);
+            outline: none;
+            resize: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            height: 80px;
+        }
+
+        .form-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 14px 28px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: gap 0.3s, background 0.2s;
+        }
+
+        .form-btn:hover {
+            background: #D4B87A;
+            gap: 20px;
+        }
+
+        /* FOOTER */
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 48px;
+            border-top: 1px solid var(--line);
+        }
+
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-copy {
+            font-size: 0.72rem;
+            color: var(--muted);
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-socials a {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-socials a:hover {
+            color: var(--dark);
+        }
+
+        /* ANIMATIONS */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav {
+                padding: 18px 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-left {
+                padding: 100px 24px 48px;
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .hero-right {
+                height: 280px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat {
+                padding: 24px;
+            }
+
+            .section-header {
+                padding: 60px 24px 36px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .design-grid {
+                padding: 0 24px 60px;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .work-card:nth-child(1) {
+                grid-column: 1 / 3;
+            }
+
+            .work-card:nth-child(2) {
+                grid-column: 1 / 2;
+            }
+
+            .work-card:nth-child(3) {
+                grid-column: 2 / 3;
+            }
+
+            .work-card:nth-child(4) {
+                grid-column: 1 / 2;
+            }
+
+            .work-card:nth-child(5) {
+                grid-column: 2 / 3;
+            }
+
+            .work-card:nth-child(6) {
+                grid-column: 1 / 3;
+            }
+
+            .photo-section {
+                padding: 60px 24px;
+            }
+
+            .photo-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .photo-card:last-child {
+                display: none;
+            }
+
+            .services {
+                padding: 60px 24px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-item {
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .contact {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-left {
+                padding: 60px 24px;
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .contact-right {
+                padding: 60px 24px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 14px;
+                text-align: center;
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <a href="#" class="nav-logo">Ismingiz</a>
+        <ul class="nav-links">
+            <li><a href="#design">Dizayn</a></li>
+            <li><a href="#photo">Fotografiya</a></li>
+            <li><a href="#services">Xizmatlar</a></li>
+            <li><a href="#contact">Aloqa</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-left">
+            <div class="hero-tag">Grafik Dizayner & Fotograf — Toshkent</div>
+            <h1 class="hero-title">
+                Vizual<br>
+                <em>Hikoyalar</em><br>
+                Yarataman
+            </h1>
+            <p class="hero-desc">
+                Grafik dizayn va fotografiya orqali brendlar uchun esda qoladigan vizual identitet yarataman. Har bir
+                loyiha — noyob hikoya.
+            </p>
+            <a href="#design" class="hero-cta">Ishlarni Ko'rish →</a>
+        </div>
+        <div class="hero-right">
+            <!--
+      RASM QO'SHISH:
+      1. img tagini top: 0; left: 0; width:100%; height:100%; object-fit:cover; position:absolute; display:block; qiling
+      2. src ga rasm yo'lini yozing
+    -->
+            <img src="" alt="Hero rasm" style="display:none">
+            <div class="slot-icon">🖼</div>
+            <div class="slot-text">Asosiy rasm — bu yerga</div>
+            <div class="hero-number">01</div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat fade-up">
+            <div class="stat-num">3+</div>
+            <div class="stat-label">Yil tajriba</div>
+        </div>
+        <div class="stat fade-up">
+            <div class="stat-num">40+</div>
+            <div class="stat-label">Loyiha</div>
+        </div>
+        <div class="stat fade-up">
+            <div class="stat-num">20+</div>
+            <div class="stat-label">Mijoz</div>
+        </div>
+        <div class="stat fade-up">
+            <div class="stat-num">5★</div>
+            <div class="stat-label">Reyting</div>
+        </div>
+    </div>
+
+    <!-- GRAPHIC DESIGN -->
+    <section id="design">
+        <div class="section-header">
+            <div>
+                <div class="section-tag">Asosiy yo'nalish</div>
+                <h2 class="section-title">Grafik<br>Dizayn Ishlari</h2>
+            </div>
+            <a href="#contact" class="section-link">Buyurtma Berish</a>
+        </div>
+
+        <div class="design-grid">
+
+            <div class="work-card fade-up">
+                RASM: <img class="work-img" src="/portfolio/kung-fu-maktabi-banner.jpg" alt="" style="display:block">
+                <div class="work-empty">
+                    <div class="empty-icon">🎨</div>
+                    <div class="empty-text">Katta loyiha — 16:9</div>
+                </div>
+                <div class="work-info">
+                    <span class="work-title-text">Brend Identitet</span>
+                    <span class="work-cat">Logo & Brending</span>
+                </div>
+            </div>
+
+            <div class="work-card fade-up">
+                <!-- RASM: <img class="work-img" src="loyiha2.jpg" alt="" style="display:block"> -->
+                <div class="work-empty">
+                    <div class="empty-icon">🖌</div>
+                    <div class="empty-text">Rasm bu yerga</div>
+                </div>
+                <div class="work-info">
+                    <span class="work-title-text">Poster Dizayn</span>
+                    <span class="work-cat">Print</span>
+                </div>
+            </div>
+
+            <div class="work-card fade-up">
+                <!-- RASM: <img class="work-img" src="loyiha3.jpg" alt="" style="display:block"> -->
+                <div class="work-empty">
+                    <div class="empty-icon">📱</div>
+                    <div class="empty-text">Rasm bu yerga</div>
+                </div>
+                <div class="work-info">
+                    <span class="work-title-text">SMM Kontent</span>
+                    <span class="work-cat">Ijtimoiy Tarmoq</span>
+                </div>
+            </div>
+
+            <div class="work-card fade-up">
+                <!-- RASM: <img class="work-img" src="loyiha4.jpg" alt="" style="display:block"> -->
+                <div class="work-empty">
+                    <div class="empty-icon">📦</div>
+                    <div class="empty-text">Rasm bu yerga</div>
+                </div>
+                <div class="work-info">
+                    <span class="work-title-text">Qadoqlash Dizayni</span>
+                    <span class="work-cat">Packaging</span>
+                </div>
+            </div>
+
+            <div class="work-card fade-up">
+                <!-- RASM: <img class="work-img" src="loyiha5.jpg" alt="" style="display:block"> -->
+                <div class="work-empty">
+                    <div class="empty-icon">💻</div>
+                    <div class="empty-text">Rasm bu yerga</div>
+                </div>
+                <div class="work-info">
+                    <span class="work-title-text">UI Dizayn</span>
+                    <span class="work-cat">Digital</span>
+                </div>
+            </div>
+
+            <div class="work-card fade-up">
+                <!-- RASM: <img class="work-img" src="loyiha6.jpg" alt="" style="display:block"> -->
+                <div class="work-empty">
+                    <div class="empty-icon">🏆</div>
+                    <div class="empty-text">Katta banner loyiha — panorama</div>
+                </div>
+                <div class="work-info">
+                    <span class="work-title-text">Reklama Kampaniyasi</span>
+                    <span class="work-cat">Brending & Print</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PHOTOGRAPHY -->
+    <section class="photo-section" id="photo">
+        <div class="section-header">
+            <div>
+                <div class="section-tag">Ikkinchi yo'nalish</div>
+                <h2 class="section-title">Fotografiya<br>Ishlari</h2>
+            </div>
+            <a href="#contact" class="section-link">Buyurtma</a>
+        </div>
+        <div class="photo-grid">
+
+            <div class="photo-card">
+                <!-- RASM: <img src="foto1.jpg" alt="" style="display:block"> -->
+                <div class="photo-empty">
+                    <div class="photo-empty-icon">📷</div>
+                    <div class="photo-empty-text">Foto bu yerga</div>
+                </div>
+                <div class="photo-overlay">
+                    <div class="photo-name">Portret Fotografiya</div>
+                    <div class="photo-loc">Toshkent, 2025</div>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <!-- RASM: <img src="foto2.jpg" alt="" style="display:block"> -->
+                <div class="photo-empty">
+                    <div class="photo-empty-icon">📷</div>
+                    <div class="photo-empty-text">Foto bu yerga</div>
+                </div>
+                <div class="photo-overlay">
+                    <div class="photo-name">Mahsulot Fotografiya</div>
+                    <div class="photo-loc">Studio, 2025</div>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <!-- RASM: <img src="foto3.jpg" alt="" style="display:block"> -->
+                <div class="photo-empty">
+                    <div class="photo-empty-icon">📷</div>
+                    <div class="photo-empty-text">Foto bu yerga</div>
+                </div>
+                <div class="photo-overlay">
+                    <div class="photo-name">Tadbir Fotografiya</div>
+                    <div class="photo-loc">Toshkent, 2024</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services" id="services">
+        <div class="section-tag">Nima qila olaman</div>
+        <h2 class="section-title">Xizmatlarim</h2>
+        <div class="services-grid">
+            <div class="service-item">
+                <div class="service-num">01</div>
+                <div class="service-name">Brend Identitet</div>
+                <div class="service-desc">Logo, rang palitasi, tipografiya va to'liq brand guideline — brendingizni
+                    noyob qilaman.</div>
+            </div>
+            <div class="service-item">
+                <div class="service-num">02</div>
+                <div class="service-name">Grafik Dizayn</div>
+                <div class="service-desc">Banner, poster, broshyura, qadoqlash va barcha print materiallar uchun
+                    professional dizayn.</div>
+            </div>
+            <div class="service-item">
+                <div class="service-num">03</div>
+                <div class="service-name">Fotografiya</div>
+                <div class="service-desc">Portret, mahsulot, tadbir va korporativ fotografiya — yuqori sifatda, tez
+                    muddatda.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="contact-left">
+            <h2 class="contact-title">Keling,<br><em>Birga</em><br>Ishlaymiz</h2>
+            <div>
+                <div class="contact-row"><span class="contact-label">Email</span><span
+                        class="contact-val">sizning@email.com</span></div>
+                <div class="contact-row"><span class="contact-label">Telefon</span><span class="contact-val">+998 XX XXX
+                        XX XX</span></div>
+                <div class="contact-row"><span class="contact-label">Joylashuv</span><span class="contact-val">Toshkent,
+                        O'zbekiston</span></div>
+                <div class="contact-row"><span class="contact-label">Instagram</span><span
+                        class="contact-val">@sizning_handle</span></div>
+            </div>
+        </div>
+        <div class="contact-right">
+            <h3>Xabar Yuboring</h3>
+            <div class="form-group"><label>Ismingiz</label><input type="text" placeholder="To'liq ismingiz"></div>
+            <div class="form-group"><label>Telefon</label><input type="text" placeholder="+998"></div>
+            <div class="form-group"><label>Xabar</label><textarea placeholder="Loyiha haqida..."></textarea></div>
+            <button class="form-btn">Yuborish →</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">Ismingiz</div>
+        <div class="footer-copy">© 2026 — Barcha huquqlar himoyalangan</div>
+        <div class="footer-socials">
+            <a href="#">Instagram</a>
+            <a href="#">Telegram</a>
+            <a href="#">Behance</a>
+        </div>
+    </footer>
+
+    <script>
+        // Custom cursor
+        const cursor = document.getElementById('cursor');
+        const ring = document.getElementById('cursorRing');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener('mousemove', e => {
+            mx = e.clientX; my = e.clientY;
+            cursor.style.left = mx + 'px';
+            cursor.style.top = my + 'px';
+        });
+        (function animateRing() {
+            rx += (mx - rx) * 0.12;
+            ry += (my - ry) * 0.12;
+            ring.style.left = rx + 'px';
+            ring.style.top = ry + 'px';
+            requestAnimationFrame(animateRing);
+        })();
+
+        // Navbar scroll
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Fade up
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+    </script>
+</body>
+
+</html>
